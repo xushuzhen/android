@@ -50,19 +50,26 @@ class AndroidHandle:
                 pass
             input("截屏成功，易保存到：%s，继续截屏按任意键后会车\n" % image_path_name)
 
-    def tap(self, x, y, sleep=None):
+    def click(self, x, y, sleep=None):
         os.popen("adb -s %s shell input tap %s %s" % (self.now_device, x, y))
         if sleep:
             time.sleep(sleep)
 
-    def loop_tap(self, x, y, sleep, text=""):
+    def loop_click(self, x, y, sleep, text=""):
         count = 1
         while True:
-            self.tap(x, y)
+            self.click(x, y)
             real_sleep = sleep + sleep * 0.2 * random.randint(0, 100) / 100
             print(text + "第\t%s\t次自动点击位置 x=%s, y=%s, random=%s, sleep=%s" % (count, x, y, sleep * 0.2, real_sleep))
             time.sleep(real_sleep)
             count = count + 1
+
+    def list_click(self, in_list):
+        for item in in_list:
+            x = item["tap"]["x"]
+            y = item["tap"]["y"]
+            sleep = item["tap"]["sleep"]
+            self.click(x, y, sleep)
 
 
 if __name__ == "__main__":

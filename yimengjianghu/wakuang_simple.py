@@ -5,4 +5,4 @@ from common.android_handle import *
 
 if __name__ == "__main__":
     handle = AndroidHandle()
-    handle.loop_tap(1662, 709, 11, "自动挖矿 ")
+    handle.loop_click(1662, 709, 11, "自动挖矿 ")
