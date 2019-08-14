@@ -1,0 +1,7 @@
+*.pyc
+.idea
+*.log
+dump.rdb
+.env
+/image/*
+*.png
