@@ -1,9 +1,12 @@
 # 前往npc
 bangpai_npc = [
     {"tap": {"x": 2096, "y": 302, "sleep": 2}},  # 展开按钮
-    {"tap": {"x": 1878, "y": 864, "sleep": 2}},  # 点击生活技能
+    {"tap": {"x": 1990, "y": 745, "sleep": 2}},  # 点击生活技能
     {"tap": {"x": 1618, "y": 351, "sleep": 2}},  # 点击帮派跑商的前往
 ]
+
+# 判断是否到帮派npc
+check_paoshang = {"text_pic": [1660, 200, 2150, 750]}
 
 # 开始帮派跑商
 paoshang = [
@@ -43,7 +46,7 @@ buy2 = [
 ]
 
 buy3 = [
-    {"swipe": {"start_x": 1660, "start_y": 687, "end_x": 1660, "end_y": 687, "hold": 8, "sleep": 2}},  # 持续按"+"添加商品
+    {"swipe": {"start_x": 1660, "start_y": 687, "end_x": 1661, "end_y": 688, "hold": 8, "sleep": 10}},  # 持续按"+"添加商品
     {"tap": {"x": 1420, "y": 860, "sleep": 2}},  # 购买按钮
 ]
 
@@ -54,4 +57,12 @@ close_win = {"tap": {"x": 1864, "y": 102, "sleep": 2}}
 final = {
     "tap": {"x": 300, "y": 300, "sleep": 2},
     "text_pic": [174, 268, 531, 339]
+}
+
+# 跑商上缴
+paoshang_shangjiao = {
+    {"tap": {"x": 1880, "y": 480, "sleep": 2}},
+    {"tap": {"x": 1780, "y": 740, "sleep": 2}},
+    {"tap": {"x": 2112, "y": 43, "sleep": 2}},
+    {"tap": {"x": 1777, "y": 370, "sleep": 2}},
 }

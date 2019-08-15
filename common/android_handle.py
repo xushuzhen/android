@@ -33,8 +33,10 @@ class AndroidHandle:
             print("没有检测到设备")
 
     def screencap(self, path="", name=""):
+        is_name = True
         if not name:
             name = int(input("请输入基数（整数）：\n"))
+            is_name = False
         if not path:
             path = self.image_path
         while True:
@@ -48,7 +50,10 @@ class AndroidHandle:
                 name += 1
             except:
                 pass
-            input("截屏成功，易保存到：%s，继续截屏按任意键后会车\n" % image_path_name)
+            if not is_name:
+                input("截屏成功，易保存到：%s，继续截屏按任意键后会车\n" % image_path_name)
+            else:
+                break
 
     def click(self, x, y, sleep=None):
         os.popen("adb -s %s shell input tap %s %s" % (self.now_device, x, y))
@@ -84,7 +89,7 @@ class AndroidHandle:
                 start_y = item["swipe"]["start_y"]
                 end_x = item["swipe"]["end_x"]
                 end_y = item["swipe"]["end_y"]
-                hold = item["swipe"]["hold"]
+                hold = item["swipe"]["hold"] * 1000
                 sleep = item["swipe"]["sleep"]
                 self.swipe(start_x, start_y, end_x, end_y, hold, sleep)
             except KeyError:
@@ -99,4 +104,5 @@ if __name__ == "__main__":
     # real_sleep = sleep + sleep * 0.2 * random.randint(0, 100) / 100
     # print(real_sleep)
     handle = AndroidHandle()
-    # handle.screencap()
+    # handle.screencap("./", "temp")
+    handle.screencap()

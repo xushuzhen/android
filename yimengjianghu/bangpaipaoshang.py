@@ -10,6 +10,7 @@ from common.pic_handle import *
 def get_img_str(crop_position):
     img = PicHandle("./temp.png")
     img_crop = img.crop(crop_position)
+    # img_crop.show()
     img_crop_resize = img.resize(img_crop, 5)
     img_str = img.img_to_str(img_crop_resize)
     return img_str
@@ -29,32 +30,68 @@ def zhi():
     return 0
 
 
-def start():
-    handle = AndroidHandle()
+def bangpai_npc(flag="start"):
+    while True:
+        handle.screencap("./", "temp")
+        time.sleep(5)
+        img_str = get_img_str(check_paoshang["text_pic"])
+        if img_str and "跑商" in img_str:
+            if flag == "start":
+                print("开始帮派跑商")
+                handle.list_click(paoshang)
+                break
+            elif flag == "end":
+                print("到达npc，跑商上缴")
+                handle.list_click(paoshang_shangjiao)
+                break
+        else:
+            print("还没到达帮派npc")
 
-    print("前往npc")
-    handle.list_click(bangpai_npc)
 
-    print("开始帮派跑商")
-    handle.list_click(paoshang)
-
+def paoshang_loop():
+    first_time = True
     # 循环前往商人
-    npc_order = [0, 1, 0, 2, 3, 4]
+    # npc_order = [1, 0, 2, 3, 4, 0]
+    npc_order = [1, 0, 2, 3, 0]
     accomplish = False
     while not accomplish:
         for index in npc_order:
             print("前往商人%s" % index)
+            handle.list_click([map])
+            if first_time:
+                handle.list_click([world])
+                handle.list_click([jiangnan])
+                first_time = False
             handle.list_click([npc_position[index]])
+            handle.list_click([close_map])
             while True:
                 handle.screencap("./", "temp")
                 time.sleep(5)
                 img_str = get_img_str(dialogue["text_pic"])
-                if "对" in img_str:
-                    print("到达商人npc")
+                if img_str and ("对" in img_str or "广" in img_str):
+                    print("到达商人npc %s" % img_str)
                     handle.list_click([dialogue])
                     break
                 else:
-                    print("还没到达商人npc")
+                    handle.list_click([swipe_a_little])
+                    print("还没到达商人npc %s" % img_str)
+
+                print("判断是否跑场完成")
+                img_str = get_img_str(final["text_pic"])
+                if img_str and "已经完成" in img_str:
+                    handle.list_click([final])
+                    accomplish = True
+                    print("完成一次跑商，返回帮派npc")
+                    break
+                else:
+                    handle.list_click([swipe_a_little])
+                    print("未完成，前往下一个商人 %s" % img_str)
+
+            if accomplish:
+                break
+
+            print("帮会跑商")
+            handle.list_click([npc_paoshang])
 
             print("出售")
             handle.list_click(sell)
@@ -74,14 +111,29 @@ def start():
 
             print("判断是否跑场完成")
             img_str = get_img_str(final["text_pic"])
-            if "已经完成" in img_str:
+            if img_str and "已经完成" in img_str:
                 handle.list_click([final])
                 accomplish = True
                 print("完成一次跑商，返回帮派npc")
                 break
             else:
-                print("未完成，前往下一个商人")
+                handle.list_click([swipe_a_little])
+                print("未完成，前往下一个商人 %s" % img_str)
+
+
+def start():
+    handle = AndroidHandle()
+    print("前往npc")
+    handle.list_click(bangpai_npc)
+    bangpai_npc()
+    print("寻找商人循环")
+    paoshang_loop()
+    print("跑商上缴")
+    bangpai_npc("end")
 
 
 if __name__ == "__main__":
-    start()
+    # 日常跑商3次
+    for i in range(3):
+        print("开始第 %s 轮帮派日常跑商" % i)
+        start()

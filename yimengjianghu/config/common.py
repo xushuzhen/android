@@ -8,3 +8,5 @@ dialogue = {
     "text_pic": [1720, 676, 1800, 716]
 }  # 对话按钮
 
+# 转一小下
+swipe_a_little = {"swipe": {"start_x": 1387, "start_y": 471, "end_x": 1700, "end_y": 469, "hold": 2, "sleep": 4}}
