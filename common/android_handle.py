@@ -55,6 +55,11 @@ class AndroidHandle:
         if sleep:
             time.sleep(sleep)
 
+    def swipe(self, start_x, start_y, end_x, end_y, hold, sleep=None):
+        os.popen("adb -s %s shell input swipe %s %s %s %s %s" % (self.now_device, start_x, start_y, end_x, end_y, hold))
+        if sleep:
+            time.sleep(sleep)
+
     def loop_click(self, x, y, sleep, text=""):
         count = 1
         while True:
@@ -66,10 +71,24 @@ class AndroidHandle:
 
     def list_click(self, in_list):
         for item in in_list:
-            x = item["tap"]["x"]
-            y = item["tap"]["y"]
-            sleep = item["tap"]["sleep"]
-            self.click(x, y, sleep)
+            print("执行%s" % item)
+            try:
+                x = item["tap"]["x"]
+                y = item["tap"]["y"]
+                sleep = item["tap"]["sleep"]
+                self.click(x, y, sleep)
+            except KeyError:
+                pass
+            try:
+                start_x = item["swipe"]["start_x"]
+                start_y = item["swipe"]["start_y"]
+                end_x = item["swipe"]["end_x"]
+                end_y = item["swipe"]["end_y"]
+                hold = item["swipe"]["hold"]
+                sleep = item["swipe"]["sleep"]
+                self.swipe(start_x, start_y, end_x, end_y, hold, sleep)
+            except KeyError:
+                pass
 
 
 if __name__ == "__main__":
