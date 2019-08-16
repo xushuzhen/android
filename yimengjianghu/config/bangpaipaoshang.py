@@ -56,13 +56,12 @@ close_win = {"tap": {"x": 1864, "y": 102, "sleep": 2}}
 # 跑商结束返回帮派
 final = {
     "tap": {"x": 300, "y": 300, "sleep": 2},
-    "text_pic": [174, 268, 531, 339]
+    "text_pic": [174, 268, 531, 395]
 }
 
 # 跑商上缴
-paoshang_shangjiao = {
+paoshang_shangjiao = [
     {"tap": {"x": 1880, "y": 480, "sleep": 2}},
-    {"tap": {"x": 1780, "y": 740, "sleep": 2}},
-    {"tap": {"x": 2112, "y": 43, "sleep": 2}},
-    {"tap": {"x": 1777, "y": 370, "sleep": 2}},
-}
+    {"tap": {"x": 1380, "y": 740, "sleep": 2}},
+    {"tap": {"x": 1777, "y": 370, "sleep": 2}}
+]

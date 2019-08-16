@@ -58,10 +58,19 @@ if __name__ == "__main__":
     imgs = p.crop_split4(i)
     for i in imgs:
         # i.show()
-        temp = p.crop2(i, [0, 0, 50, 50])
+        temp = p.crop2(i, [0, 0, 40, 40])
         # temp.show()
         a = temp.load()
-        print(a[15, 15])
+        sum = 0
+        for x in range(40):
+            for y in range(40):
+                try:
+                    r, g, b, none = a[x, y]
+                    # sum += (r + g + b)
+                    sum += r
+                except IndexError:
+                    pass
+        print(sum)
         # r, g, b = a[0, 0]
         # print(r, g, b)
     # j = p.resize(i, 5)

@@ -22,18 +22,25 @@ def zhi():
     cr = img.crop([370, 180, 1100, 410])
     imgs = img.crop_split4(cr)
     for i in range(len(imgs)):
-        temp = img.crop2(imgs[i], [0, 0, 50, 50])
+        temp = img.crop2(imgs[i], [0, 0, 40, 40])
         a = temp.load()
-        print(a[15, 15])
-        if a[15, 15][0] > 150:
+        sum = 0
+        for x in range(40):
+            for y in range(40):
+                try:
+                    r, g, b, none = a[x, y]
+                    sum += r
+                except IndexError:
+                    pass
+        print(sum)
+        if sum >= 200000:
             return i
     return 0
 
 
-def bangpai_npc(flag="start"):
+def go_bangpai_npc(flag="start"):
     while True:
         handle.screencap("./", "temp")
-        time.sleep(5)
         img_str = get_img_str(check_paoshang["text_pic"])
         if img_str and "跑商" in img_str:
             if flag == "start":
@@ -46,6 +53,7 @@ def bangpai_npc(flag="start"):
                 break
         else:
             print("还没到达帮派npc")
+        time.sleep(5)
 
 
 def paoshang_loop():
@@ -66,7 +74,6 @@ def paoshang_loop():
             handle.list_click([close_map])
             while True:
                 handle.screencap("./", "temp")
-                time.sleep(5)
                 img_str = get_img_str(dialogue["text_pic"])
                 if img_str and ("对" in img_str or "广" in img_str):
                     print("到达商人npc %s" % img_str)
@@ -81,11 +88,12 @@ def paoshang_loop():
                 if img_str and "已经完成" in img_str:
                     handle.list_click([final])
                     accomplish = True
-                    print("完成一次跑商，返回帮派npc")
+                    print("完成一次跑商，返回帮派npc %s" % img_str)
                     break
                 else:
                     handle.list_click([swipe_a_little])
                     print("未完成，前往下一个商人 %s" % img_str)
+                time.sleep(5)
 
             if accomplish:
                 break
@@ -114,22 +122,24 @@ def paoshang_loop():
             if img_str and "已经完成" in img_str:
                 handle.list_click([final])
                 accomplish = True
-                print("完成一次跑商，返回帮派npc")
+                print("完成一次跑商，返回帮派npc %s" % img_str)
                 break
             else:
                 handle.list_click([swipe_a_little])
                 print("未完成，前往下一个商人 %s" % img_str)
 
 
+handle = AndroidHandle()
+
+
 def start():
-    handle = AndroidHandle()
     print("前往npc")
     handle.list_click(bangpai_npc)
-    bangpai_npc()
+    go_bangpai_npc()
     print("寻找商人循环")
     paoshang_loop()
     print("跑商上缴")
-    bangpai_npc("end")
+    go_bangpai_npc("end")
 
 
 if __name__ == "__main__":
