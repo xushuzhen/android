@@ -18,6 +18,7 @@ def get_img_str(crop_position):
 
 # 选择值的商品
 def zhi():
+    handle.screencap("./", "temp")
     img = PicHandle("./temp.png")
     cr = img.crop([370, 180, 1100, 410])
     imgs = img.crop_split4(cr)
