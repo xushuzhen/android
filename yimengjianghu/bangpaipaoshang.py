@@ -7,15 +7,6 @@ from common.android_handle import *
 from common.pic_handle import *
 
 
-def get_img_str(crop_position):
-    img = PicHandle("./temp.png")
-    img_crop = img.crop(crop_position)
-    # img_crop.show()
-    img_crop_resize = img.resize(img_crop, 5)
-    img_str = img.img_to_str(img_crop_resize)
-    return img_str
-
-
 # 选择值的商品
 def zhi():
     handle.screencap("./", "temp")
