@@ -24,7 +24,8 @@ handle = AndroidHandle()
 if __name__ == "__main__":
     i = sys.argv[1]
     while True:
-        if i == "2":
-            start_f(False)
+        if i == "2" or i == 2:
+            start_f(True)
         else:
             start_f()
+        time.sleep(5)
